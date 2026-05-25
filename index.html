@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arsenic — Minecraft 1.8.9 Client</title>
+<meta name="description" content="Arsenic is a free open-source Minecraft 1.8.9 client built to bypass Hypixel and Grim Anti-Cheat. Download now — clean, fast, and deadly.">
+<meta name="keywords" content="Arsenic client, Minecraft 1.8.9 cheat client, Hypixel bypass, Grim AC bypass, open source Minecraft client, Forge mod">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --r: #DD425E;
+  --r2: #c43552;
+  --r3: rgba(221,66,94,0.15);
+  --r4: rgba(221,66,94,0.07);
+  --r5: rgba(221,66,94,0.4);
+  --bg: #080809;
+  --bg2: #0e0e10;
+  --bg3: #131316;
+  --glass: rgba(255,255,255,0.04);
+  --glass2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(221,66,94,0.2);
+  --text: #f0f0f2;
+  --muted: rgba(240,240,242,0.45);
+  --muted2: rgba(240,240,242,0.25);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Outfit', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.018; pointer-events: none; z-index: 0;
+}
+
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(221,66,94,0.12) 0%, transparent 70%);
+  top: -200px; left: -200px;
+  animation: blobDrift 18s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(221,66,94,0.08) 0%, transparent 70%);
+  bottom: 10%; right: -100px;
+  animation: blobDrift 14s ease-in-out infinite alternate-reverse;
+}
+@keyframes blobDrift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(60px, 40px) scale(1.1); }
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(8,8,9,0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--text);
+  font-weight: 700; font-size: 18px; letter-spacing: -0.3px;
+}
+.logo-mark {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--r), var(--r2));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: white; letter-spacing: 0;
+  box-shadow: 0 0 20px rgba(221,66,94,0.35);
+}
+.nav-center {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13.5px; font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); background: var(--glass2); }
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 16px; border-radius: 10px;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  background: var(--glass); border: 1px solid var(--border);
+  color: var(--muted); transition: all 0.2s;
+}
+.btn-ghost:hover { color: var(--text); background: var(--glass2); border-color: rgba(255,255,255,0.12); }
+.btn-ghost svg { width: 15px; height: 15px; flex-shrink: 0; }
+.btn-red {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 10px;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--r), var(--r2));
+  color: white;
+  box-shadow: 0 4px 20px rgba(221,66,94,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: all 0.2s; border: none;
+}
+.btn-red:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(221,66,94,0.4), inset 0 1px 0 rgba(255,255,255,0.15); }
+.btn-red:active { transform: translateY(0); }
+.btn-red svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+.hero-mesh {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(221,66,94,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(221,66,94,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 100%);
+  animation: meshScroll 30s linear infinite;
+}
+@keyframes meshScroll {
+  from { background-position: 0 0; }
+  to { background-position: 80px 80px; }
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 6px 14px 6px 8px;
+  font-size: 12px; font-family: var(--mono); color: var(--r);
+  margin-bottom: 32px;
+  animation: fadeUp 0.7s ease both;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--r);
+  box-shadow: 0 0 8px var(--r5);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-h1 {
+  font-size: clamp(56px, 10vw, 130px);
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+  animation: fadeUp 0.7s 0.1s ease both;
+  position: relative;
+  isolation: isolate;
+  filter: drop-shadow(0 0 22px rgba(221,66,94,0.18));
+}
+
+.hero-h1::before {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  z-index: -2;
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(221,66,94,0.0) 0deg,
+      rgba(221,66,94,0.85) 55deg,
+      rgba(255,110,140,0.55) 110deg,
+      rgba(120,20,40,0.15) 160deg,
+      rgba(255,150,190,0.65) 220deg,
+      rgba(221,66,94,0.15) 280deg,
+      rgba(221,66,94,0.0) 360deg
+    );
+  filter: blur(58px) saturate(180%);
+  opacity: 0.95;
+  animation:
+    arsenicShaderSpin 14s linear infinite,
+    arsenicShaderPulse 5s ease-in-out infinite alternate;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.hero-h1::after {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255,255,255,0.02) 18%,
+      rgba(255,255,255,0.22) 32%,
+      rgba(255,120,150,0.12) 45%,
+      transparent 62%
+    );
+  background-size: 220% 100%;
+  mix-blend-mode: screen;
+  filter: blur(14px);
+  animation: arsenicSweep 4.2s linear infinite;
+  pointer-events: none;
+}
+
+.hero-h1 .word-arse,
+.hero-h1 .word-nic {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-h1 .word-arse {
+  color: var(--text);
+  text-shadow:
+    0 0 18px rgba(255,255,255,0.06),
+    0 0 42px rgba(221,66,94,0.12);
+}
+
+.hero-h1 .word-nic {
+  background:
+    linear-gradient(
+      135deg,
+      #ff95a8 0%,
+      #ff5d7d 20%,
+      #ffffff 35%,
+      #ff6d8a 52%,
+      #dd425e 75%,
+      #ff9db2 100%
+    );
+  background-size: 250% 250%;
+  animation: arsenicTextFlow 7s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes arsenicShaderSpin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.08);
+  }
+}
+
+@keyframes arsenicShaderPulse {
+  0% {
+    opacity: 0.7;
+    filter: blur(52px) saturate(150%);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(72px) saturate(220%);
+  }
+}
+
+@keyframes arsenicSweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -40% 0;
+  }
+}
+
+@keyframes arsenicTextFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.hero-h1 .word-arse { color: var(--text); }
+.hero-h1 .word-nic {
+  background: linear-gradient(135deg, var(--r) 0%, #ff8097 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  margin: 20px auto 0;
+  max-width: 520px;
+  font-size: 17px; font-weight: 300;
+  color: var(--muted);
+  line-height: 1.65;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.hero-actions {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  margin-top: 40px;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+.btn-hero-dl {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 26px; border-radius: 12px;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  background: linear-gradient(135deg, var(--r), var(--r2));
+  color: white; text-decoration: none;
+  box-shadow: 0 4px 32px rgba(221,66,94,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+  cursor: pointer; border: none;
+}
+.btn-hero-dl::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+}
+.btn-hero-dl:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(221,66,94,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+.btn-hero-dl svg { width: 16px; height: 16px; flex-shrink: 0; position: relative; z-index: 1; }
+.btn-hero-dl span { position: relative; z-index: 1; }
+
+.btn-hero-gh {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 26px; border-radius: 12px;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  background: var(--glass2);
+  border: 1px solid var(--border);
+  color: var(--text); text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.25s;
+}
+.btn-hero-gh:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
+.btn-hero-gh svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.btn-hero-dc {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 26px; border-radius: 12px;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  background: rgba(88,101,242,0.15);
+  border: 1px solid rgba(88,101,242,0.25);
+  color: #a5aeff; text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-hero-dc:hover { background: rgba(88,101,242,0.22); transform: translateY(-2px); }
+.btn-hero-dc svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ─── STATS ─── */
+.stats-row {
+  position: relative; z-index: 1;
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--border);
+  overflow: hidden;
+}
+.stat-cell {
+  background: var(--bg);
+  flex: 1; min-width: 160px;
+  padding: 28px 36px;
+  text-align: center;
+  transition: background 0.25s;
+}
+.stat-cell:hover { background: var(--bg2); }
+.stat-n {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 60%, var(--r));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: -1px; line-height: 1;
+  min-height: 42px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-n.loading {
+  font-size: 14px; font-weight: 400;
+  color: var(--muted2);
+  -webkit-text-fill-color: var(--muted2);
+}
+.stat-l {
+  font-size: 12px; font-family: var(--mono);
+  color: var(--muted); margin-top: 4px; letter-spacing: 0.5px;
+}
+
+/* ─── SECTION BASE ─── */
+.section {
+  position: relative; z-index: 1;
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-full {
+  position: relative; z-index: 1;
+  padding: 100px 40px;
+}
+.section-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-family: var(--mono);
+  color: var(--r); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-tag::before { content: '—'; color: var(--r); }
+h2.section-h {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.1; color: var(--text);
+  margin-bottom: 16px;
+}
+h2.section-h span { color: var(--r); }
+.section-lead {
+  font-size: 16px; color: var(--muted);
+  font-weight: 300; line-height: 1.7;
+  max-width: 480px;
+}
+
+/* ─── FEATURES ─── */
+#features { background: var(--bg); }
+.features-intro {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+  margin-bottom: 72px;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.feat-card {
+  background: var(--bg2);
+  padding: 36px 32px;
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.feat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--r), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.feat-card:hover { background: var(--bg3); }
+.feat-card:hover::before { opacity: 1; }
+.feat-icon-wrap {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--r4);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  color: var(--r);
+}
+.feat-icon-wrap svg { width: 20px; height: 20px; }
+.feat-title {
+  font-size: 15px; font-weight: 700;
+  letter-spacing: -0.2px; margin-bottom: 8px;
+}
+.feat-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+/* ─── VIDEO ─── */
+#showcase { background: var(--bg2); }
+.video-outer {
+  max-width: 860px; margin: 0 auto;
+  position: relative;
+}
+.video-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 60px rgba(221,66,94,0.06);
+  background: var(--bg3);
+  aspect-ratio: 16/9;
+}
+.video-thumb {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; cursor: pointer;
+  background: linear-gradient(135deg, #0e0e10 0%, #13080a 100%);
+}
+.video-thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.play-ring {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--r), var(--r2));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  box-shadow: 0 0 0 0 var(--r5);
+  animation: playPulse 2.5s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+.play-ring svg { width: 28px; height: 28px; margin-left: 3px; }
+.video-thumb:hover .play-ring { transform: scale(1.08); }
+@keyframes playPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(221,66,94,0.4); }
+  50% { box-shadow: 0 0 0 18px rgba(221,66,94,0); }
+}
+.play-label { font-size: 13px; font-family: var(--mono); color: var(--muted); letter-spacing: 1px; }
+.video-glow {
+  position: absolute; inset: -1px;
+  border-radius: 21px;
+  background: transparent;
+  box-shadow: 0 0 80px rgba(221,66,94,0.08);
+  pointer-events: none;
+}
+
+/* ─── MODULES ─── */
+#modules { background: var(--bg); }
+.modules-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+.mod-list {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg2);
+}
+.mod-header {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px; font-family: var(--mono);
+  color: var(--muted2); letter-spacing: 1px; text-transform: uppercase;
+}
+.mod-row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 16px; align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+  cursor: default;
+}
+.mod-row:last-child { border-bottom: none; }
+.mod-row:hover { background: var(--glass); }
+.mod-name { font-size: 14px; font-weight: 500; }
+.mod-cat { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+.tag {
+  display: inline-block;
+  font-size: 10px; font-family: var(--mono);
+  padding: 3px 8px; border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+.tag-green { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+.tag-red { background: var(--r4); color: var(--r); border: 1px solid var(--border2); }
+.tag-yellow { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+
+/* ─── CTA ─── */
+#cta {
+  position: relative; z-index: 1;
+  padding: 120px 40px;
+  text-align: center;
+  overflow: hidden;
+}
+.cta-glow {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(221,66,94,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-card {
+  position: relative;
+  max-width: 700px; margin: 0 auto;
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 28px;
+  padding: 72px 56px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 80px rgba(221,66,94,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.cta-card h2 {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; letter-spacing: -1.5px;
+  margin-bottom: 16px;
+}
+.cta-card h2 span { color: var(--r); }
+.cta-card p {
+  font-size: 16px; color: var(--muted); font-weight: 300;
+  line-height: 1.7; margin-bottom: 40px;
+}
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── RELEASE INFO BADGE ─── */
+.release-meta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-family: var(--mono); color: var(--muted2);
+  margin-top: 8px;
+}
+.release-meta svg { width: 12px; height: 12px; }
+
+/* ─── ABOUT / SEO ─── */
+#about {
+  position: relative; z-index: 1;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 80px 40px;
+}
+.about-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 3fr 2fr; gap: 80px;
+}
+.about-left h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 20px; }
+.about-left p { font-size: 14.5px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; font-weight: 300; }
+.about-left p strong { color: var(--text); font-weight: 500; }
+.about-left code {
+  font-family: var(--mono); font-size: 12.5px;
+  background: var(--r4); color: var(--r);
+  padding: 2px 7px; border-radius: 5px;
+}
+.about-right { padding-top: 8px; }
+.info-block { margin-bottom: 32px; }
+.info-label {
+  font-size: 10px; font-family: var(--mono);
+  color: var(--r); letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.info-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.info-list li {
+  font-size: 13.5px; color: var(--muted);
+  display: flex; align-items: center; gap: 8px; font-family: var(--mono);
+}
+.info-list li::before { content: '↗'; color: var(--r); font-size: 11px; }
+.info-list a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.info-list a:hover { color: var(--r); }
+
+/* ─── CREDITS ─── */
+#credits {
+  position: relative; z-index: 1;
+  padding: 80px 40px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.credits-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+.credits-inner h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+.credits-inner p { font-size: 14px; color: var(--muted); margin-bottom: 40px; font-weight: 300; }
+.credits-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+.credit-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 16px 20px;
+  transition: border-color 0.25s, background 0.25s;
+  text-decoration: none;
+  display: block;
+}
+.credit-card:hover { border-color: var(--border2); background: var(--r4); }
+.credit-av {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--r), var(--r2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 700; color: white;
+  margin: 0 auto 12px;
+  box-shadow: 0 4px 16px rgba(221,66,94,0.25);
+  overflow: hidden;
+}
+.credit-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.credit-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.credit-role { font-size: 10px; font-family: var(--mono); color: var(--r); letter-spacing: 1px; }
+
+/* ─── FOOTER ─── */
+footer {
+  position: relative; z-index: 1;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-size: 16px; font-weight: 700; color: var(--text); }
+.footer-logo span { color: var(--r); }
+.footer-copy { font-size: 12px; font-family: var(--mono); color: var(--muted2); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color 0.2s; font-family: var(--mono); }
+.footer-links a:hover { color: var(--r); }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-center { display: none; }
+  .section, .section-full { padding: 70px 20px; }
+  .features-intro { grid-template-columns: 1fr; gap: 40px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .modules-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .credits-grid { grid-template-columns: repeat(2, 1fr); }
+  .cta-card { padding: 48px 28px; }
+  footer { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .credits-grid { grid-template-columns: repeat(2, 1fr); }
+  #cta { padding: 70px 20px; }
+  #about, #credits { padding: 60px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">As</div>
+    Arsenic
+  </a>
+  <div class="nav-center">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#showcase" class="nav-link">Showcase</a>
+    <a href="#modules" class="nav-link">Modules</a>
+    <a href="#about" class="nav-link">About</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://discord.gg/arsenic" target="_blank" class="btn-ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.081.11 18.104.127 18.12a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Discord
+    </a>
+    <button id="navDownloadBtn" class="btn-red" onclick="triggerDownload()">
+      <i data-lucide="download" style="width:14px;height:14px;flex-shrink:0;"></i>
+      Download
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-mesh"></div>
+
+  <div class="hero-badge">
+    <div class="hero-badge-dot"></div>
+    <span id="heroBadgeText">Loading latest release...</span>
+  </div>
+
+  <h1 class="hero-h1">
+    <span class="word-arse">Arse</span><span class="word-nic">nic</span>
+  </h1>
+
+  <p class="hero-sub">
+    A <strong>free, open-source</strong> Minecraft 1.8.9 client engineered for <strong>Hypixel</strong>. Built to slip past <strong>Grim Anti-Cheat</strong> — clean, fast, and deadly.
+  </p>
+
+  <div class="hero-actions">
+    <button id="heroDownloadBtn" class="btn-hero-dl" onclick="triggerDownload()">
+      <i data-lucide="download" style="width:16px;height:16px;flex-shrink:0;position:relative;z-index:1;"></i>
+      <span id="heroDownloadLabel">Download Latest</span>
+    </button>
+    <a href="https://github.com/ArsenicClient/Arsenic" target="_blank" class="btn-hero-gh">
+      <i data-lucide="github" style="width:16px;height:16px;flex-shrink:0;"></i>
+      View on GitHub
+    </a>
+    <a href="https://discord.gg/arsenic" target="_blank" class="btn-hero-dc">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.081.11 18.104.127 18.12a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 19.791 19.791 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.030z"/></svg>
+      Join Discord
+    </a>
+  </div>
+  <div id="releaseFileMeta" class="release-meta" style="margin-top:14px;animation:fadeUp 0.7s 0.4s ease both;opacity:0;"></div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row" id="statsRow">
+  <div class="stat-cell">
+    <div class="stat-n loading" id="statStars">—</div>
+    <div class="stat-l">GitHub Stars</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n loading" id="statCommits">—</div>
+    <div class="stat-l">Commits</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n loading" id="statReleases">—</div>
+    <div class="stat-l">Releases</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n loading" id="statDownloads">—</div>
+    <div class="stat-l">Total Downloads</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n loading" id="statForks">—</div>
+    <div class="stat-l">Forks</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">MIT</div>
+    <div class="stat-l">License</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div id="features" style="background:var(--bg); position:relative; z-index:1;">
+  <div class="section">
+    <div class="features-intro">
+      <div class="reveal">
+        <div class="section-tag">Features</div>
+        <h2 class="section-h">Everything you<br>need to <span>win</span></h2>
+      </div>
+      <div class="reveal reveal-d1">
+        <p class="section-lead">Arsenic ships with a complete toolkit for competitive Minecraft — modules, commands, configs, and a polished GUI — all in one clean Forge mod.</p>
+      </div>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="zap"></i></div>
+        <div class="feat-title">Module System</div>
+        <div class="feat-desc">Toggle hacks, bind keys, chain combos. A fully extensible module architecture at the core of everything.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="terminal"></i></div>
+        <div class="feat-title">Command System</div>
+        <div class="feat-desc">Full in-chat command interface. Control every aspect of the client without ever leaving the game.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="shield-check"></i></div>
+        <div class="feat-title">Grim AC Bypass</div>
+        <div class="feat-desc">Modules are tested against GrimAC on Hypixel. Anything that triggers detections gets patched or removed.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="settings-2"></i></div>
+        <div class="feat-title">Config System</div>
+        <div class="feat-desc">Save and load full module configs. Switch presets on the fly — one for ranked, one for casual.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="layout-dashboard"></i></div>
+        <div class="feat-title">Custom GUI</div>
+        <div class="feat-desc">A sleek ClickGUI with multiple theme support. Looks sharp, responds fast, stays out of your way.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><i data-lucide="plug-zap"></i></div>
+        <div class="feat-title">Mixins & Events</div>
+        <div class="feat-desc">Custom event bus and deep Mixin hooks. Built for extensibility — contribute your own modules easily.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO SHOWCASE -->
+<div id="showcase" style="background:var(--bg2); position:relative; z-index:1; padding: 100px 40px;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:48px;" class="reveal">
+      <div class="section-tag" style="justify-content:center;">Showcase</div>
+      <h2 class="section-h" style="max-width:500px;margin:0 auto;">Watch it <span>in action</span></h2>
+    </div>
+    <div class="video-outer reveal">
+      <div class="video-frame">
+        <div class="video-thumb" id="videoThumb" onclick="loadVideo()">
+          <div class="play-ring"><i data-lucide="play"></i></div>
+          <div class="play-label">WATCH SHOWCASE</div>
+        </div>
+      </div>
+      <div class="video-glow"></div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:20px;" class="reveal reveal-d1">
+      <a href="https://www.youtube.com/@ArsenicClient" target="_blank" class="btn-ghost">
+        <i data-lucide="youtube"></i>
+        Visit YouTube Channel
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<div id="modules" style="background:var(--bg); position:relative; z-index:1;">
+  <div class="section">
+    <div class="modules-wrap">
+      <div class="reveal">
+        <div class="section-tag">Module Roster</div>
+        <h2 class="section-h">Built to <span>bypass</span></h2>
+        <p class="section-lead" style="margin-bottom:32px;">Every module is tested against Hypixel's Grim Anti-Cheat before shipping. More being added constantly.</p>
+        <a href="https://github.com/ArsenicClient/Arsenic/tree/main/src/main" target="_blank" class="btn-ghost" style="display:inline-flex;">
+          Browse source code →
+        </a>
+      </div>
+      <div class="mod-list reveal reveal-d1">
+        <div class="mod-header">
+          <span>Module</span>
+          <span>Category</span>
+          <span>Status</span>
+        </div>
+        <div class="mod-row"><span class="mod-name">KillAura</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">Velocity</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">Reach</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">AimAssist</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">Criticals</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">Sprint</span><span class="mod-cat">Movement</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">HUD / Arraylist</span><span class="mod-cat">Render</span><span class="tag tag-green">Stable</span></div>
+        <div class="mod-row"><span class="mod-name">ESP</span><span class="mod-cat">Render</span><span class="tag tag-yellow">In Dev</span></div>
+        <div class="mod-row"><span class="mod-name">Scaffold</span><span class="mod-cat">Player</span><span class="tag tag-yellow">In Dev</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-card reveal">
+    <div class="section-tag" style="justify-content:center;margin-bottom:16px;">Open Source · Free Forever</div>
+    <h2>Ready to <span>dominate</span>?</h2>
+    <p>Arsenic is MIT licensed and completely free. Download the latest release, or build from source. Every contribution welcome.</p>
+    <div class="cta-btns">
+      <button class="btn-hero-dl" onclick="triggerDownload()">
+        <i data-lucide="download" style="width:15px;height:15px;flex-shrink:0;position:relative;z-index:1;"></i>
+        <span style="position:relative;z-index:1;" id="ctaDownloadLabel">Download Latest</span>
+      </button>
+      <a href="https://github.com/ArsenicClient/Arsenic" target="_blank" class="btn-hero-gh">
+        <i data-lucide="github" style="width:15px;height:15px;flex-shrink:0;"></i>
+        Source Code
+      </a>
+      <a href="https://discord.gg/arsenic" target="_blank" class="btn-hero-dc">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.081.11 18.104.127 18.12a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 19.791 19.791 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Community
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SEO / ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-left reveal">
+      <h2>About Arsenic Client</h2>
+      <p><strong>Arsenic</strong> is a free, open-source <strong>Minecraft 1.8.9 cheat client</strong> targeting competitive players on <strong>Hypixel</strong>. It runs as a standard <strong>Forge mod</strong> — no launcher patching, no sketchy injectors, just drop it in your mods folder.</p>
+      <p>The client's core focus is passing the <strong>Grim Anti-Cheat (GrimAC)</strong> system used on Hypixel. Any module that triggers detection flags is immediately patched or pulled from the build, keeping your account safe.</p>
+      <p>Arsenic includes a full <strong>module system</strong>, <strong>command interface</strong>, persistent <strong>config system</strong>, and a polished ClickGUI — built on custom Mixins and a lightweight event bus for maximum performance.</p>
+      <p>To build from source: clone the repo, run <code>setup.bat</code>, load the Gradle project in your IDE, and start developing. Contact <code>@kv.v</code> on Discord for setup help.</p>
+    </div>
+    <div class="about-right reveal reveal-d1">
+      <div class="info-block">
+        <div class="info-label">Technical</div>
+        <ul class="info-list">
+          <li>Minecraft 1.8.9</li>
+          <li>Forge Mod</li>
+          <li>Java + GLSL</li>
+          <li>Gradle build</li>
+          <li>MIT License</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Targets</div>
+        <ul class="info-list">
+          <li>Hypixel</li>
+          <li>Grim Anti-Cheat</li>
+          <li>PvP Servers</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Resources</div>
+        <ul class="info-list">
+          <li><a href="https://github.com/ArsenicClient/Arsenic" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://github.com/ArsenicClient/Arsenic/releases" target="_blank">Releases</a></li>
+          <li><a href="https://github.com/ArsenicClient/Arsenic/issues" target="_blank">Report a Bug</a></li>
+          <li><a href="https://github.com/ArsenicClient/Arsenic/blob/main/LICENSE" target="_blank">MIT License</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section id="credits">
+  <div class="credits-inner">
+    <h2>Contributors</h2>
+    <p>A huge thanks to everyone who built Arsenic.</p>
+    <div class="credits-grid reveal" id="creditsGrid">
+      <!-- Populated dynamically from GitHub API -->
+      <a href="https://github.com/kviraptor" target="_blank" class="credit-card">
+        <div class="credit-av" id="av-kv">Kv</div>
+        <div class="credit-name">Kv</div>
+        <div class="credit-role">Lead Dev</div>
+      </a>
+      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
+        <div class="credit-av" id="av-lily">Li</div>
+        <div class="credit-name">Lily</div>
+        <div class="credit-role">Contributor</div>
+      </a>
+      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
+        <div class="credit-av" id="av-stephen">St</div>
+        <div class="credit-name">Stephen</div>
+        <div class="credit-role">Contributor</div>
+      </a>
+      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
+        <div class="credit-av" id="av-cosmic">Co</div>
+        <div class="credit-name">Cosmic</div>
+        <div class="credit-role">Contributor</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Arse<span>nic</span></div>
+  <div class="footer-copy" id="footerCopy">© 2026 ArsenicClient · MIT License</div>
+  <div class="footer-links">
+    <a href="https://github.com/ArsenicClient/Arsenic" target="_blank">GitHub</a>
+    <a href="https://discord.gg/arsenic" target="_blank">Discord</a>
+    <a href="https://github.com/ArsenicClient/Arsenic/releases" target="_blank">Releases</a>
+    <a href="https://github.com/ArsenicClient/Arsenic/blob/main/LICENSE" target="_blank">License</a>
+  </div>
+</footer>
+
+<script>
+// ─── STATE ───
+let latestJarUrl = 'https://github.com/ArsenicClient/Arsenic/releases/latest';
+let latestReleaseName = null;
+
+// ─── LUCIDE ICONS ───
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+
+// ─── DOWNLOAD HANDLER ───
+function triggerDownload() {
+  if (latestJarUrl) {
+    window.location.href = latestJarUrl;
+  }
+}
+
+// ─── FORMAT NUMBER ───
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// ─── ANIMATE COUNTER ───
+function animCount(el, target, suffix = '') {
+  if (!el || isNaN(target)) return;
+  el.classList.remove('loading');
+  let cur = 0;
+  const step = Math.max(1, target / 60);
+  const t = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = Math.floor(cur).toLocaleString() + suffix;
+    if (cur >= target) clearInterval(t);
+  }, 20);
+}
+
+// ─── FORMAT BYTES ───
+function fmtBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+// ─── FORMAT DATE ───
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// ─── FETCH GITHUB DATA ───
+async function loadGitHubData() {
+  const REPO = 'ArsenicClient/Arsenic';
+  const BASE = 'https://api.github.com';
+  const HEADERS = { 'Accept': 'application/vnd.github+json' };
+
+  try {
+    // Parallel: repo info + releases
+    const [repoRes, releasesRes] = await Promise.all([
+      fetch(`${BASE}/repos/${REPO}`, { headers: HEADERS }),
+      fetch(`${BASE}/repos/${REPO}/releases?per_page=100`, { headers: HEADERS }),
+    ]);
+
+    // ── Repo stats ──
+    if (repoRes.ok) {
+      const repo = await repoRes.json();
+      animCount(document.getElementById('statStars'), repo.stargazers_count);
+      animCount(document.getElementById('statForks'), repo.forks_count);
+    }
+
+    // ── Releases ──
+    if (releasesRes.ok) {
+      const releases = await releasesRes.json();
+      animCount(document.getElementById('statReleases'), releases.length);
+
+      // Total downloads across all releases (using the example pattern)
+      let totalDownloads = 0;
+      releases.forEach(release => {
+        release.assets.forEach(asset => {
+          totalDownloads += asset.download_count;
+        });
+      });
+
+      // Animate download counter
+      const dlEl = document.getElementById('statDownloads');
+      if (dlEl) {
+        dlEl.classList.remove('loading');
+        const formatted = formatNumber(totalDownloads);
+        dlEl.style.opacity = '0';
+        dlEl.textContent = formatted;
+        setTimeout(() => {
+          dlEl.style.transition = 'opacity 0.8s ease';
+          dlEl.style.opacity = '1';
+        }, 100);
+        // Also run the animated counter
+        animCount(dlEl, totalDownloads);
+      }
+
+      // ── Latest release ──
+      if (releases.length > 0) {
+        const latest = releases[0];
+        latestReleaseName = latest.tag_name;
+
+        // Update badge
+        const badgeEl = document.getElementById('heroBadgeText');
+        if (badgeEl) badgeEl.textContent = `${latest.tag_name} now available · 1.8.9 Forge`;
+
+        // Find .jar asset
+        const jar = latest.assets.find(a => a.name.endsWith('.jar'));
+        if (jar) {
+          latestJarUrl = jar.browser_download_url;
+
+          // Update button labels
+          const label = `Download ${latest.tag_name}`;
+          const heroLabel = document.getElementById('heroDownloadLabel');
+          const ctaLabel = document.getElementById('ctaDownloadLabel');
+          if (heroLabel) heroLabel.textContent = label;
+          if (ctaLabel) ctaLabel.textContent = label;
+
+          // Show file meta below hero buttons
+          const meta = document.getElementById('releaseFileMeta');
+          if (meta) {
+            meta.style.opacity = '1';
+            meta.innerHTML = `
+              <i data-lucide="file" style="width:12px;height:12px;flex-shrink:0;"></i>
+              ${jar.name} &nbsp;·&nbsp; ${fmtBytes(jar.size)} &nbsp;·&nbsp; Released ${fmtDate(latest.published_at)}
+            `;
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+          }
+        } else {
+          // No JAR asset — link to release page
+          latestJarUrl = latest.html_url;
+        }
+
+        // Footer — latest release year
+        const year = new Date(latest.published_at).getFullYear();
+        const footerCopy = document.getElementById('footerCopy');
+        if (footerCopy) {
+          footerCopy.textContent = `© ${year} ArsenicClient · MIT License · ${latest.tag_name}`;
+        }
+      }
+    }
+
+    // ── Commit count via Link header pagination ──
+    const commitRes = await fetch(
+      `${BASE}/repos/${REPO}/commits?per_page=1`,
+      { headers: HEADERS }
+    );
+    if (commitRes.ok) {
+      const link = commitRes.headers.get('Link') || '';
+      const match = link.match(/page=(\d+)>; rel="last"/);
+      if (match) {
+        animCount(document.getElementById('statCommits'), parseInt(match[1]));
+      }
+    }
+
+    // ── Contributors with avatars ──
+    const contribRes = await fetch(
+      `${BASE}/repos/${REPO}/contributors?per_page=20`,
+      { headers: HEADERS }
+    );
+    if (contribRes.ok) {
+      const contributors = await contribRes.json();
+      const cards = document.querySelectorAll('.credit-card');
+      contributors.slice(0, cards.length).forEach((contrib, i) => {
+        if (i < cards.length) {
+          const av = cards[i].querySelector('.credit-av');
+          if (av && contrib.avatar_url) {
+            av.innerHTML = `<img src="${contrib.avatar_url}&s=96" alt="${contrib.login}" loading="lazy">`;
+          }
+          cards[i].href = contrib.html_url;
+        }
+      });
+    }
+
+  } catch (err) {
+    console.error('GitHub API error:', err);
+    // Graceful fallback
+    const badgeEl = document.getElementById('heroBadgeText');
+    if (badgeEl) badgeEl.textContent = 'v0.3 now available · 1.8.9 Forge';
+    ['statStars','statCommits','statReleases','statDownloads','statForks'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = '—'; el.classList.add('loading'); }
+    });
+  }
+}
+
+// ─── SCROLL REVEAL ───
+const revealEls = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => revObs.observe(el));
+
+// ─── STAT COUNTER TRIGGER ON SCROLL ───
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statsObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+const statsRow = document.querySelector('.stats-row');
+if (statsRow) statsObs.observe(statsRow);
+
+// ─── VIDEO ───
+function loadVideo() {
+  const thumb = document.getElementById('videoThumb');
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed?listType=user_uploads&list=ArsenicClient&autoplay=1';
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  thumb.style.cursor = 'default';
+  thumb.onclick = null;
+  thumb.innerHTML = '';
+  thumb.appendChild(iframe);
+}
+
+// ─── NAV SCROLL ───
+const navEl = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  navEl.style.background = window.scrollY > 40
+    ? 'rgba(8,8,9,0.95)'
+    : 'rgba(8,8,9,0.7)';
+});
+
+// ─── INIT ───
+loadGitHubData();
+</script>
+</body>
+</html>
