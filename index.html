@@ -675,7 +675,10 @@ h2.section-h span { color: var(--r); }
 .credits-inner h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
 .credits-inner p { font-size: 14px; color: var(--muted); margin-bottom: 40px; font-weight: 300; }
 .credits-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1rem;
 }
 .credit-card {
   background: var(--glass);
@@ -925,14 +928,9 @@ footer {
           <span>Status</span>
         </div>
         <div class="mod-row"><span class="mod-name">KillAura</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
-        <div class="mod-row"><span class="mod-name">Velocity</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
-        <div class="mod-row"><span class="mod-name">Reach</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
         <div class="mod-row"><span class="mod-name">AimAssist</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
-        <div class="mod-row"><span class="mod-name">Criticals</span><span class="mod-cat">Combat</span><span class="tag tag-green">Bypasses</span></div>
-        <div class="mod-row"><span class="mod-name">Sprint</span><span class="mod-cat">Movement</span><span class="tag tag-green">Bypasses</span></div>
-        <div class="mod-row"><span class="mod-name">HUD / Arraylist</span><span class="mod-cat">Render</span><span class="tag tag-green">Stable</span></div>
-        <div class="mod-row"><span class="mod-name">ESP</span><span class="mod-cat">Render</span><span class="tag tag-yellow">In Dev</span></div>
-        <div class="mod-row"><span class="mod-name">Scaffold</span><span class="mod-cat">Player</span><span class="tag tag-yellow">In Dev</span></div>
+        <div class="mod-row"><span class="mod-name">Scaffold</span><span class="mod-cat">Movement</span><span class="tag tag-green">Bypasses</span></div>
+        <div class="mod-row"><span class="mod-name">Backtrack</span><span class="mod-cat">Render</span><span class="tag tag-green">Bypasses</span></div>
       </div>
     </div>
   </div>
@@ -970,7 +968,7 @@ footer {
       <p><strong>Arsenic</strong> is a free, open-source <strong>Minecraft 1.8.9 cheat client</strong> targeting competitive players on <strong>Hypixel</strong>. It runs as a standard <strong>Forge mod</strong> — no launcher patching, no sketchy injectors, just drop it in your mods folder.</p>
       <p>The client's core focus is passing the <strong>Grim Anti-Cheat (GrimAC)</strong> system used on Hypixel. Any module that triggers detection flags is immediately patched or pulled from the build, keeping your account safe.</p>
       <p>Arsenic includes a full <strong>module system</strong>, <strong>command interface</strong>, persistent <strong>config system</strong>, and a polished ClickGUI — built on custom Mixins and a lightweight event bus for maximum performance.</p>
-      <p>To build from source: clone the repo, run <code>setup.bat</code>, load the Gradle project in your IDE, and start developing. Contact <code>@kv.v</code> on Discord for setup help.</p>
+      <p>To build from source: clone the repo, run <code>setup.bat</code>, load the Gradle project in your IDE, and start developing. Contact <code>@kv.dev</code> on Discord for setup help.</p>
     </div>
     <div class="about-right reveal reveal-d1">
       <div class="info-block">
@@ -1010,27 +1008,12 @@ footer {
     <h2>Contributors</h2>
     <p>A huge thanks to everyone who built Arsenic.</p>
     <div class="credits-grid reveal" id="creditsGrid">
-      <!-- Populated dynamically from GitHub API -->
-      <a href="https://github.com/kviraptor" target="_blank" class="credit-card">
-        <div class="credit-av" id="av-kv">Kv</div>
-        <div class="credit-name">Kv</div>
-        <div class="credit-role">Lead Dev</div>
-      </a>
-      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
-        <div class="credit-av" id="av-lily">Li</div>
-        <div class="credit-name">Lily</div>
-        <div class="credit-role">Contributor</div>
-      </a>
-      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
-        <div class="credit-av" id="av-stephen">St</div>
-        <div class="credit-name">Stephen</div>
-        <div class="credit-role">Contributor</div>
-      </a>
-      <a href="https://github.com/ArsenicClient/Arsenic/graphs/contributors" target="_blank" class="credit-card">
-        <div class="credit-av" id="av-cosmic">Co</div>
-        <div class="credit-name">Cosmic</div>
-        <div class="credit-role">Contributor</div>
-      </a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
+     <a href="#" class="credit-card"><div class="credit-av"></div><div class="credit-name">—</div><div class="credit-role">loading</div></a>
     </div>
   </div>
 </section>
@@ -1201,24 +1184,28 @@ async function loadGitHubData() {
       }
     }
 
-    // ── Contributors with avatars ──
-    const contribRes = await fetch(
-      `${BASE}/repos/${REPO}/contributors?per_page=20`,
-      { headers: HEADERS }
-    );
-    if (contribRes.ok) {
-      const contributors = await contribRes.json();
-      const cards = document.querySelectorAll('.credit-card');
-      contributors.slice(0, cards.length).forEach((contrib, i) => {
-        if (i < cards.length) {
-          const av = cards[i].querySelector('.credit-av');
-          if (av && contrib.avatar_url) {
-            av.innerHTML = `<img src="${contrib.avatar_url}&s=96" alt="${contrib.login}" loading="lazy">`;
-          }
-          cards[i].href = contrib.html_url;
-        }
-      });
-    }
+    const ROLES = ['Lead Dev','Contributor','Contributor','Contributor','Contributor','Contributor'];
+
+const contribRes = await fetch(
+  `${BASE}/repos/${REPO}/contributors?per_page=6`,
+  { headers: HEADERS }
+);
+if (contribRes.ok) {
+  const contributors = await contribRes.json();
+  const cards = document.querySelectorAll('#creditsGrid .credit-card');
+  contributors.slice(0, 6).forEach((contrib, i) => {
+    const card = cards[i];
+    if (!card) return;
+    card.href = contrib.html_url;
+    const av = card.querySelector('.credit-av');
+    if (av) av.innerHTML = `<img src="${contrib.avatar_url}&s=96" alt="${contrib.login}" loading="lazy">`;
+    const name = card.querySelector('.credit-name');
+    if (name) name.textContent = contrib.login;
+    const role = card.querySelector('.credit-role');
+    if (role) role.textContent = ROLES[i] ?? 'Contributor';
+  });
+}
+
 
   } catch (err) {
     console.error('GitHub API error:', err);
