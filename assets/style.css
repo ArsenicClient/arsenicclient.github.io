@@ -15,8 +15,8 @@ html { scroll-behavior: smooth; }
   --border: rgba(255,255,255,0.07);
   --border2: rgba(221,66,94,0.2);
   --text: #f0f0f2;
-  --muted: rgba(240,240,242,0.45);
-  --muted2: rgba(240,240,242,0.25);
+  --muted: #ffffff;
+  --muted2: #ffffff;
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Outfit', sans-serif;
 }
