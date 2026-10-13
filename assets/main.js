@@ -45,6 +45,13 @@ function fmtDate(iso) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+// ─── PICK RELEASE JAR ───
+// Prefer the "(main)" jar; fall back to the release's first .jar asset.
+function pickJar(release) {
+  const jars = release.assets.filter(a => a.name.endsWith('.jar'));
+  return jars.find(a => /main/i.test(a.name)) || jars[0] || null;
+}
+
 // ─── FETCH GITHUB DATA ───
 async function loadGitHubData() {
   const REPO = 'ArsenicClient/Arsenic';
@@ -89,11 +96,14 @@ async function loadGitHubData() {
 
       const dlList = document.getElementById('dlList');
       if (dlList) {
-        dlList.innerHTML = releases.slice(0, 8).map(r => {
-          const j = r.assets.find(a => a.name.endsWith('.jar'));
-          const href = j ? j.browser_download_url : r.html_url;
-          const size = j ? ' · ' + fmtBytes(j.size) : '';
-          return `<a class="rel-row" href="${href}"><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)}${size}</span></a>`;
+        dlList.innerHTML = releases.map(r => {
+          const jars = r.assets.filter(a => a.name.endsWith('.jar'));
+          if (jars.length === 0) {
+            return `<a class="rel-row" href="${r.html_url}"><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)}</span></a>`;
+          }
+          const builds = jars.map(j => `<a class="rel-row rel-build" href="${j.browser_download_url}"><span class="rel-name">${j.name}</span><span class="rel-meta">${fmtDate(r.published_at)} · ${fmtBytes(j.size)}</span></a>`).join('');
+          const count = `${jars.length} build${jars.length > 1 ? 's' : ''}`;
+          return `<details class="rel-card"><summary><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)} · ${count}</span></summary><div class="rel-builds">${builds}</div></details>`;
         }).join('');
       }
 
@@ -104,7 +114,7 @@ async function loadGitHubData() {
         const badgeEl = document.getElementById('heroBadgeText');
         if (badgeEl) badgeEl.textContent = `${latest.tag_name} now available · 1.8.9 injector`;
 
-        const jar = latest.assets.find(a => a.name.endsWith('.jar'));
+        const jar = pickJar(latest);
         if (jar) {
           latestJarUrl = jar.browser_download_url;
 
