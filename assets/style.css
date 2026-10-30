@@ -1,6 +1,6 @@
 /* Arsenic subpages: the same neon-on-void look as the landing page */
 :root{
-  --void:#09080b;--bg:#121015;--bg2:#1a171e;--fg:#f3eee8;--mute:#9a93a0;--line:#2a2630;--red:#dd425e;--red2:#ff5f7c;--amber:#ffd596;
+  --void:#09080b;--bg:#121015;--bg2:#1a171e;--fg:#fff;--mute:#fff;--line:#2a2630;--red:#dd425e;--red2:#ff5f7c;--amber:#ffd596;
   --font:'Archivo',system-ui,sans-serif;--code:'JetBrains Mono',ui-monospace,monospace;
   --pad:clamp(16px,3.2vw,48px);--nav:60px;
   --neon:0 0 2px #fff2f5,0 0 8px rgba(255,34,80,.9),0 0 22px rgba(255,34,80,.55),0 0 48px rgba(255,34,80,.3);
@@ -29,8 +29,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .dc{display:grid;place-items:center;width:34px;height:34px;margin:0 -6px;transition:color .15s}
 .dc:hover{color:var(--fg)}
 .dc svg{width:22px;height:22px}
+.gh{font:500 15px/1 var(--font);transition:color .15s}.gh b{font-weight:600}
 @media (max-width:900px){
   :root{--nav:104px}
+  .gh{display:none}
   .nav{flex-wrap:wrap;height:auto;min-height:var(--nav);row-gap:0;padding-top:10px}
   .links{order:3;width:calc(100% + 2 * var(--pad));margin:0 calc(-1 * var(--pad));padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;height:44px;align-items:center;gap:22px;white-space:nowrap}
   .links::-webkit-scrollbar{display:none}
@@ -48,11 +50,24 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ---------- page header: a neon sign over the floor line ---------- */
 .page-hero{position:relative;text-align:center;padding:clamp(56px,11vh,120px) var(--pad) clamp(40px,7vh,72px);border-bottom:1px solid var(--line);background:radial-gradient(60% 90% at 50% 0%,rgba(255,40,85,.09),transparent 70%)}
 .page-hero::after{content:"";position:absolute;left:50%;bottom:-1px;width:min(560px,70%);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--red2),transparent);box-shadow:0 0 14px rgba(255,34,80,.7)}
-.crumbs{font:400 13px/1 var(--code);color:#6d6673;margin-bottom:22px}
+.crumbs{font:400 13px/1 var(--code);color:#fff;margin-bottom:22px}
 .crumbs a{color:var(--mute)}.crumbs a:hover{color:var(--fg)}
-.page-hero .section-tag{display:inline-block;font:500 12px/1 var(--code);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);text-shadow:0 0 8px rgba(255,160,40,.6);border:1px solid rgba(255,184,80,.35);border-radius:3px;padding:7px 10px;margin-bottom:22px}
-.page-hero h1{font:800 clamp(40px,6.4vw,96px)/.96 var(--font);font-stretch:110%;letter-spacing:-.025em;max-width:13em;margin:0 auto;text-wrap:balance}
-.page-hero h1 span{color:#ffe6eb;text-shadow:var(--neon)}
+/* the page title is a neon sign under a pediment, like the temple on the landing page */
+.sign{display:inline-flex;flex-direction:column;align-items:stretch;max-width:100%;animation:on .9s steps(1) both}
+.roof{position:relative;height:clamp(54px,7vw,92px);margin:0 -14px 10px}
+@media (max-width:560px){.roof{margin:0 2px 8px}}
+.tri{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tri path,.fl .gl{fill:none;stroke:#d6ecff;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 2px rgb(105,180,255)) drop-shadow(0 0 8px rgba(105,180,255,.7))}
+.fl{position:absolute;left:50%;bottom:4%;width:clamp(26px,3.4vw,42px);transform:translateX(-50%);overflow:visible}
+.fl .gl{stroke-width:1.6}
+.fl .wv{fill:none;stroke:#ff8aa2;stroke-width:1.5;stroke-linecap:round;filter:drop-shadow(0 0 2px rgb(255,34,80)) drop-shadow(0 0 6px rgba(255,34,80,.7))}
+.fl .liq{fill:rgba(255,60,104,.2)}
+.page-hero h1{font:300 clamp(34px,5.6vw,84px)/1 var(--font);font-stretch:78%;letter-spacing:.02em;text-transform:uppercase;text-wrap:balance;
+  color:#fff2f5;text-shadow:0 0 1px #ff8aa2,0 0 4px #ff2a58,0 0 12px rgba(255,34,80,.85),0 0 30px rgba(255,34,80,.45);
+  border:2px solid #d6ecff;border-radius:6px;padding:.28em .5em .3em;
+  box-shadow:0 0 3px rgb(105,180,255),0 0 14px rgba(105,180,255,.55),inset 0 0 3px rgb(105,180,255),inset 0 0 14px rgba(105,180,255,.3)}
+.page-hero h1 span{color:inherit;text-shadow:inherit}
+@keyframes on{0%{opacity:0}12%{opacity:.8}18%{opacity:.1}30%{opacity:1}36%{opacity:.3}46%,100%{opacity:1}}
 .page-hero p{margin:20px auto 0;max-width:34em;font-size:clamp(17px,1.4vw,20px);color:var(--mute)}
 .page-hero p a{color:var(--fg);border-bottom:2px solid var(--red)}
 
@@ -136,7 +151,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;paddin
 footer nav{display:flex;gap:20px;flex-wrap:wrap}
 footer a:hover{color:var(--fg)}
 
-@media (prefers-reduced-motion:reduce){.bubs circle{animation:none}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){.bubs circle,.sign{animation:none}*{transition:none!important}}
 
 /* ---------- minimal-copy pages ---------- */
 .wide.flush,.prose.flush{padding-top:0}

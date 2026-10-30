@@ -263,6 +263,23 @@ async function loadChangelog() {
 }
 if (document.getElementById('changelog')) loadChangelog();
 
+// ─── STARS ───
+// Same star count as the landing page nav; reuse its cached GitHub data when there is some.
+async function loadStars() {
+  const els = document.querySelectorAll('[data-gh="stars"]');
+  if (!els.length) return;
+  let n = null;
+  try { n = JSON.parse(sessionStorage.getItem('arsenic-neon-gh2') || 'null')?.d?.stars ?? null; } catch (e) {}
+  if (n == null) {
+    try {
+      const res = await fetch('https://api.github.com/repos/ArsenicClient/Arsenic');
+      if (res.ok) n = (await res.json()).stargazers_count;
+    } catch (e) {}
+  }
+  if (n != null) els.forEach(e => e.textContent = formatNumber(n));
+}
+loadStars();
+
 // ─── INIT ───
 if (document.getElementById('statStars') || document.getElementById('heroBadgeText') || document.getElementById('creditsGrid') || document.getElementById('dlList'))
 loadGitHubData();
