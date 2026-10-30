@@ -2,11 +2,6 @@
 let latestJarUrl = 'https://github.com/ArsenicClient/Arsenic/releases/latest';
 let latestReleaseName = null;
 
-// ─── LUCIDE ICONS ───
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-});
-
 // ─── DOWNLOAD HANDLER ───
 function triggerDownload() {
   if (latestJarUrl) {
@@ -96,14 +91,14 @@ async function loadGitHubData() {
 
       const dlList = document.getElementById('dlList');
       if (dlList) {
-        dlList.innerHTML = releases.map(r => {
+        dlList.innerHTML = releases.filter(r => !r.draft).map((r, i) => {
           const jars = r.assets.filter(a => a.name.endsWith('.jar'));
           if (jars.length === 0) {
             return `<a class="rel-row" href="${r.html_url}"><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)}</span></a>`;
           }
           const builds = jars.map(j => `<a class="rel-row rel-build" href="${j.browser_download_url}"><span class="rel-name">${j.name}</span><span class="rel-meta">${fmtDate(r.published_at)} · ${fmtBytes(j.size)}</span></a>`).join('');
           const count = `${jars.length} build${jars.length > 1 ? 's' : ''}`;
-          return `<details class="rel-card"><summary><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)} · ${count}</span></summary><div class="rel-builds">${builds}</div></details>`;
+          return `<details class="rel-card"${i === 0 ? ' open' : ''}><summary><span class="rel-tag">${r.tag_name}</span><span class="rel-name">${r.name || r.tag_name}</span><span class="rel-meta">${fmtDate(r.published_at)} · ${count}</span></summary><div class="rel-builds">${builds}</div></details>`;
         }).join('');
       }
 
@@ -128,10 +123,8 @@ async function loadGitHubData() {
           if (meta) {
             meta.style.opacity = '1';
             meta.innerHTML = `
-              <i data-lucide="file" style="width:12px;height:12px;flex-shrink:0;"></i>
               ${jar.name} &nbsp;·&nbsp; ${fmtBytes(jar.size)} &nbsp;·&nbsp; Released ${fmtDate(latest.published_at)}
             `;
-            if (typeof lucide !== 'undefined') lucide.createIcons();
           }
         } else {
           latestJarUrl = latest.html_url;
@@ -213,13 +206,62 @@ function loadVideo() {
   window.open('https://www.youtube.com/watch?v=rcNm_LSZh-E', '_blank');
 }
 
-// ─── NAV SCROLL ───
-const navEl = document.getElementById('nav');
-if (navEl) window.addEventListener('scroll', () => {
-  navEl.style.background = window.scrollY > 40
-    ? 'rgba(8,8,9,0.95)'
-    : 'rgba(8,8,9,0.7)';
-});
+// ─── CHANGELOG ───
+// Release notes come straight from GitHub; the static entries stay if the API is unreachable.
+function esc(t) {
+  return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function inline(t) {
+  return esc(t)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+function notes(md, name) {
+  let out = '', list = false;
+  const close = () => { if (list) { out += '</ul>'; list = false; } };
+  for (const raw of (md || '').split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line) { close(); continue; }
+    const h = line.match(/^#{1,6}\s+(.*)/);
+    if (h) {
+      close();
+      // skip a heading that only repeats the release name
+      if (!/^arsenic v?[\d.]+/i.test(h[1]) && h[1] !== name) out += `<h4>${inline(h[1])}</h4>`;
+      continue;
+    }
+    const item = line.replace(/^([-*+]|\d+[.)])\s*/, '');
+    // drop empty bullets and bare "**Label:**" stubs
+    if (!item || /^\*\*[^*]+(:\*\*|\*\*:)$/.test(item)) continue;
+    if (!list) { out += '<ul>'; list = true; }
+    out += `<li>${inline(item)}</li>`;
+  }
+  close();
+  return out;
+}
+async function loadChangelog() {
+  const el = document.getElementById('changelog');
+  const KEY = 'arsenic-releases';
+  let releases = null;
+  try {
+    const c = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if (c && Date.now() - c.t < 10 * 60 * 1000) releases = c.d;
+  } catch (e) {}
+  if (!releases) {
+    try {
+      const res = await fetch('https://api.github.com/repos/ArsenicClient/Arsenic/releases?per_page=100', { headers: { 'Accept': 'application/vnd.github+json' } });
+      if (!res.ok) return;
+      releases = (await res.json()).filter(r => !r.draft).map(r => ({ tag: r.tag_name, name: r.name, date: r.published_at, url: r.html_url, body: r.body }));
+      try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: releases })); } catch (e) {}
+    } catch (e) { return; }
+  }
+  if (!releases.length) return;
+  el.innerHTML = releases.map(r => {
+    const body = notes(r.body, r.name) || `<p>No notes for this release.</p>`;
+    return `<div class="cl-entry"><h3>${esc(r.tag)}</h3><div class="cl-date">${fmtDate(r.date)} · <a href="${r.url}" target="_blank" rel="noopener">GitHub ↗</a></div>${body}</div>`;
+  }).join('');
+}
+if (document.getElementById('changelog')) loadChangelog();
 
 // ─── INIT ───
 if (document.getElementById('statStars') || document.getElementById('heroBadgeText') || document.getElementById('creditsGrid') || document.getElementById('dlList'))
