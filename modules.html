@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arsenic Client Modules — KillAura, AimAssist, Backtrack, Scaffold &amp; More</title>
-<meta name="description" content="Full list of Arsenic Client built-in modules for Minecraft 1.8.9 by category: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
+<meta name="description" content="Every Arsenic Client module for Minecraft 1.8.9, what it does and each setting with its range and default: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="ArsenicClient">
 <meta name="theme-color" content="#09080b">
@@ -16,13 +16,13 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arsenicclient.github.io/modules.html">
 <meta property="og:title" content="Arsenic Client Modules — KillAura, AimAssist, Backtrack, Scaffold &amp; More">
-<meta property="og:description" content="Full list of Arsenic Client built-in modules for Minecraft 1.8.9 by category: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
+<meta property="og:description" content="Every Arsenic Client module for Minecraft 1.8.9, what it does and each setting with its range and default: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
 <meta property="og:image" content="https://img.youtube.com/vi/rcNm_LSZh-E/maxresdefault.jpg">
 <meta property="og:site_name" content="Arsenic Client">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Arsenic Client Modules — KillAura, AimAssist, Backtrack, Scaffold &amp; More">
-<meta name="twitter:description" content="Full list of Arsenic Client built-in modules for Minecraft 1.8.9 by category: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
+<meta name="twitter:description" content="Every Arsenic Client module for Minecraft 1.8.9, what it does and each setting with its range and default: combat (KillAura, AimAssist, Backtrack), movement (Scaffold, Clutch), player, render and client.">
 <meta name="twitter:image" content="https://img.youtube.com/vi/rcNm_LSZh-E/maxresdefault.jpg">
 <script type="application/ld+json">
 {
@@ -48,6 +48,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/docs.css">
 </head>
 <body>
 <header class="nav" id="nav">
@@ -66,13 +67,180 @@
 </header>
 <div class="wide">
 <div class="cat-grid">
-<div class="cat-card"><h3>Combat</h3><div class="cat-sub">Fight modules</div><div class="chips"><span class="chip hot">KillAura</span><span class="chip">AimAssist</span><span class="chip">Backtrack</span><span class="chip">Clicker</span><span class="chip">Reach</span><span class="chip">HitSelect</span><span class="chip">Hitflick</span><span class="chip">BlockHit</span><span class="chip">DoubleHit</span><span class="chip">JumpReset</span><span class="chip">SprintReset</span><span class="chip">KnockbackDelay</span><span class="chip">LagRange</span><span class="chip">NoHitDelay</span><span class="chip">AutoWeapon</span></div></div>
-<div class="cat-card"><h3>Movement</h3><div class="cat-sub">Get around</div><div class="chips"><span class="chip">Scaffold</span><span class="chip hot">TellyScaffold</span><span class="chip">BridgeAssist</span><span class="chip hot">Clutch</span><span class="chip">Sprint</span><span class="chip">InvMove</span><span class="chip">NoJumpDelay</span><span class="chip">Stasis</span></div></div>
+<div class="cat-card"><h3>Combat</h3><div class="cat-sub">Fight modules</div><div class="chips"><a class="chip hot" href="#killaura">KillAura</a><a class="chip" href="#autoprojectile">AutoProjectile</a><a class="chip" href="#aimassist">AimAssist</a><a class="chip" href="#backtrack">Backtrack</a><a class="chip" href="#clicker">Clicker</a><a class="chip" href="#reach">Reach</a><a class="chip" href="#hitselect">HitSelect</a><a class="chip" href="#hitflick">Hitflick</a><a class="chip" href="#blockhit">BlockHit</a><a class="chip" href="#doublehit">DoubleHit</a><a class="chip" href="#jumpreset">JumpReset</a><a class="chip" href="#sprintreset">SprintReset</a><a class="chip" href="#velocity">Velocity</a><a class="chip" href="#knockbackdelay">KnockbackDelay</a><a class="chip" href="#lagrange">LagRange</a><a class="chip" href="#nohitdelay">NoHitDelay</a><a class="chip" href="#autoweapon">AutoWeapon</a></div></div>
+<div class="cat-card"><h3>Movement</h3><div class="cat-sub">Get around</div><div class="chips"><a class="chip" href="#scaffold">Scaffold</a><a class="chip hot" href="#tellyscaffold">TellyScaffold</a><a class="chip" href="#bridgeassist">BridgeAssist</a><a class="chip hot" href="#clutch">Clutch</a><a class="chip" href="#sprint">Sprint</a><a class="chip" href="#invmove">InvMove</a><a class="chip" href="#nojumpdelay">NoJumpDelay</a><a class="chip" href="#stasis">Stasis</a></div></div>
 <div class="cat-card"><h3>Player</h3><div class="cat-sub">Inventory & utility</div><div class="chips"><span class="chip">AutoBlockIn</span><span class="chip">AutoPot</span><span class="chip">AutoTool</span><span class="chip">Blink</span><span class="chip">ChestStealer</span><span class="chip">InvManager</span><span class="chip">Refill</span><span class="chip">FastBreak</span><span class="chip">Fastplace</span><span class="chip">AntiAFK</span><span class="chip">ChatBypass</span><span class="chip">RageQuit</span></div></div>
 <div class="cat-card"><h3>Render</h3><div class="cat-sub">Visuals</div><div class="chips"><span class="chip">ESP</span><span class="chip">ChestESP</span><span class="chip">Nametags</span><span class="chip">TargetHUD</span><span class="chip">HUD</span><span class="chip">Radar</span><span class="chip">Trajectories</span><span class="chip">BedPlates</span><span class="chip">FullBright</span><span class="chip">NoHurtCam</span><span class="chip">NameHider</span><span class="chip">Pointers</span><span class="chip">RotationView</span></div></div>
 <div class="cat-card"><h3>Client</h3><div class="cat-sub">Client systems</div><div class="chips"><span class="chip">AntiBot</span><span class="chip">Targets</span><span class="chip">Cape</span><span class="chip">DiscordRPC</span><span class="chip">Recorder</span></div></div>
 <div class="cat-card"><h3>GUI</h3><div class="cat-sub">Interface</div><div class="chips"><span class="chip">PostProcessing</span><span class="chip">Custom main menu</span><span class="chip">Themes</span></div></div>
 </div>
+
+<section class="mod-docs" aria-labelledby="docs-title">
+<h2 id="docs-title">Module reference</h2>
+<p class="mod-lead">Click a module to see what it does and every setting, with its range and default. Settings tagged <span class="adv">adv</span> sit in the Advanced group of the ClickGUI.</p>
+<div class="tier-legend"><span><b class="tier tier-qol">QoL</b> not a cheat</span><span><b class="tier tier-visual">Visual</b> rendering that can still give an edge</span><span><b class="tier tier-legit">Legit</b> subtle help</span><span><b class="tier tier-blatant">Blatant</b> obvious cheating</span></div>
+<p class="mod-lead">The tier also decides which release build a module ships in and which ClickGUI toggle it sits behind.</p>
+
+<section class="mod-cat" id="combat"><h3>Combat <small>17 modules</small></h3><div class="mod-list">
+
+<details class="mod" id="killaura"><summary><span class="mod-name">KillAura</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Aims at and hits players around you.</span></summary><div class="mod-body"><p>Attacks players within 3 blocks, and starts turning toward a lone target from up to 7 blocks. Who counts as a target, and in what order, comes from <a href="#targets">Targets</a>. Lets <a href="#hitflick">Hitflick</a> and <a href="#autoprojectile">AutoProjectile</a> take over while they act.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Speed</td><td>1–360</td><td>20–50</td><td>How fast it turns toward the target.</td></tr>
+<tr><td>Return Speed<span class="adv">adv</span></td><td>1–90</td><td>5–15</td><td>How fast it turns back after losing the target.</td></tr>
+<tr><td>CPS</td><td>1–20</td><td>8–12</td><td>Clicks per second.</td></tr>
+<tr><td>Rotation Mode</td><td>Lazy, Heuristics…</td><td>Lazy</td><td>How the aim moves.</td></tr>
+<tr><td>Miss Chance<span class="adv">adv</span></td><td>0–50 %</td><td>5</td><td>Chance of a deliberate miss. Heuristics only.</td></tr>
+<tr><td>Pitch Band<span class="adv">adv</span></td><td>on / off</td><td>Off</td><td>Keeps your pitch inside Pitch Range. Heuristics only.</td></tr>
+<tr><td>Pitch Range<span class="adv">adv</span></td><td>−90–90</td><td>15–25</td><td>The pitch band used by Pitch Band.</td></tr>
+<tr><td>Silent Rotations</td><td>on / off</td><td>On</td><td>Off makes your camera turn too.</td></tr>
+<tr><td>Disable On Flag</td><td>on / off</td><td>On</td><td>Turns KillAura off when the server sets you back.</td></tr>
+<tr><td>Weapon Only<span class="adv">adv</span></td><td>on / off</td><td>Off</td><td>Only attacks with a weapon in hand.</td></tr>
+<tr><td>Circle</td><td>style</td><td>Classic</td><td>Ring drawn under the target.</td></tr>
+<tr><td>Auto Block</td><td>None, Legit, packet modes</td><td>None</td><td>Blocks with your sword between hits (for example Hypixel Hold).</td></tr>
+<tr><td>Block Tracker</td><td>on / off</td><td>Off</td><td>Says in chat whether each hit you took was blocked.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="autoprojectile"><summary><span class="mod-name">AutoProjectile</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Throws snowballs, eggs or a rod at KillAura's target when it is just out of reach.</span></summary><div class="mod-body"><p>Works with <a href="#killaura">KillAura</a>: when its target is between 3 blocks and Range away and not already hurt, it switches to a snowball or egg from your hotbar (a fishing rod only within 6 blocks), aims where the target is going to be, throws, and switches back a few ticks later. Waits 250–550 ms between throws, less the further away the target is. Paused while Scaffold or TellyScaffold is on.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Range</td><td>4–10</td><td>6</td><td>Furthest target it throws at.</td></tr>
+<tr><td>Rotation Speed</td><td>10–180</td><td>60</td><td>How fast it turns to aim.</td></tr>
+<tr><td>Rods</td><td>on / off</td><td>On</td><td>Allows fishing rods (6 blocks or closer).</td></tr>
+<tr><td>Line Of Sight</td><td>on / off</td><td>On</td><td>Doesn't throw when blocks are in the way.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="aimassist"><summary><span class="mod-name">AimAssist</span><span class="tier tier-legit">Legit</span><span class="mod-short">Pulls your aim toward the target while you hold attack.</span></summary><div class="mod-body"><p>Only while attack is held and no screen is open, and never through walls. Steps aside when KillAura or Hitflick is aiming.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Turn Speed</td><td>1–90</td><td>8–12</td><td>How hard it pulls.</td></tr>
+<tr><td>Mode</td><td>Additive, Override</td><td>Override</td><td>Additive adds your mouse movement on top. Override takes over the axes it moves.</td></tr>
+<tr><td>Rotation Mode</td><td>Lazy, Heuristics…</td><td>Lazy</td><td>How the aim moves.</td></tr>
+<tr><td>Miss Chance<span class="adv">adv</span></td><td>0–50 %</td><td>5</td><td>Chance of a deliberate miss. Heuristics only.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="backtrack"><summary><span class="mod-name">Backtrack</span><span class="tier tier-legit">Legit</span><span class="mod-short">Lets your hits land where the target was a moment ago.</span></summary><div class="mod-body"><p>Holds back the target's movement packets so you hit its older, closer position. Only in the second after your last hit, and it lets go on teleports or knockback.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Delay (ms)</td><td>10–500</td><td>100</td><td>How far back in time.</td></tr>
+<tr><td>Cooldown (ticks)</td><td>0–40</td><td>10</td><td>Pause between two uses.</td></tr>
+<tr><td>Target Dist</td><td>0–10</td><td>2–6</td><td>Only for targets in this distance range.</td></tr>
+<tr><td>Max Hurt Time</td><td>0–10</td><td>10</td><td>Only while the target's hurt time is at most this.</td></tr>
+<tr><td>Require Mouse Pressed</td><td>on / off</td><td>Off</td><td>Only while you hold attack.</td></tr>
+<tr><td>Require Weapon</td><td>on / off</td><td>Off</td><td>Only with a weapon in hand.</td></tr>
+<tr><td>Disable On Hit</td><td>on / off</td><td>On</td><td>Lets go of the held packets on a hit.</td></tr>
+<tr><td>ESP</td><td>None, Box, Filled, Model</td><td>Box</td><td>How the held position is drawn.</td></tr>
+<tr><td>Rotate Box</td><td>on / off</td><td>On</td><td>The box turns with the target.</td></tr>
+<tr><td>Line Width</td><td>1–5</td><td>2</td><td>Outline width.</td></tr>
+<tr><td>Color</td><td>color</td><td>—</td><td>ESP color.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="clicker"><summary><span class="mod-name">Clicker</span><span class="tier tier-legit">Legit</span><span class="mod-short">Clicks for you while you hold left click.</span></summary><div class="mod-body"><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>CPS</td><td>1–20</td><td>7–9</td><td>Clicks per second.</td></tr>
+<tr><td>Weapon Only</td><td>on / off</td><td>On</td><td>Only clicks with a weapon in hand.</td></tr>
+<tr><td>Click Sounds</td><td>on / off</td><td>On</td><td>Plays a click sound.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="reach"><summary><span class="mod-name">Reach</span><span class="tier tier-legit">Legit</span><span class="mod-short">Hits from a little further away.</span></summary><div class="mod-body"><p>A new distance is picked inside the range for every hit.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Reach</td><td>3–6</td><td>3–3.1</td><td>Hit distance in blocks (step 0.05).</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="hitselect"><summary><span class="mod-name">HitSelect</span><span class="tier tier-legit">Legit</span><span class="mod-short">Holds back some hits so you win trades.</span></summary><div class="mod-body"><p>Blocks a hit when the timing is bad for you. The fight resets after 2.5 s without a hit.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Mode</td><td>WaitForFirstHit, HitLaterInTrades, HurtTime</td><td>WaitForFirstHit</td><td>WaitForFirstHit: don't hit first until you were hit or 0.8 s passed. HitLaterInTrades: when you are both hurt, wait 150 ms. HurtTime: only hit after you were hit, once your hurt time is 9 or less.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="hitflick"><summary><span class="mod-name">Hitflick</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Turns away for one tick as you hit, to knock the target in the direction you pick.</span></summary><div class="mod-body"><p>Your server-side aim flicks to the chosen side for one tick, then the hit lands, so the knockback goes that way. Void simulates the knockback and only flicks when it would push the target off an edge; it needs extra knockback (sprinting or a Knockback enchant) and draws an arrow showing the push. Void2 picks the side of the target with more open drop. No hit goes out if the server sees you blocking.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Direction</td><td>Left, Right, Back, Custom, Void, Void2</td><td>Right</td><td>Which way to flick.</td></tr>
+<tr><td>Blink</td><td>on / off</td><td>Off</td><td>Holds your packets during the flick.</td></tr>
+<tr><td>Stay On Hitbox</td><td>on / off</td><td>On</td><td>Keeps the flick small enough for the hit to still connect.</td></tr>
+<tr><td>Cooldown</td><td>0–1000 ms</td><td>250</td><td>Minimum time between flicks.</td></tr>
+<tr><td>Angle</td><td>1–180</td><td>90</td><td>Custom only: flick angle.</td></tr>
+<tr><td>Max angle</td><td>15–180</td><td>180</td><td>Void only: widest angle it searches.</td></tr>
+<tr><td>Void2 Angle</td><td>1–180</td><td>90</td><td>Void2 only: flick angle, give or take 5°.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="blockhit"><summary><span class="mod-name">BlockHit</span><span class="tier tier-legit">Legit</span><span class="mod-short">Blocks with your sword right after a hit.</span></summary><div class="mod-body"><p>With a sword, it holds right click after your hit while the target's hurt time is above Hurtime, then lets go. The target is forgotten past 8 blocks.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Hurtime</td><td>0–10</td><td>2</td><td>Stops blocking once the target's hurt time gets down to this.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="doublehit"><summary><span class="mod-name">DoubleHit</span><span class="tier tier-legit">Legit</span><span class="mod-short">Holds your packets so the next hit still lands as the target gets away.</span></summary><div class="mod-body"><p>After a hit, if the target is about to leave reach, all your outgoing packets are held so the next hit goes through. Released at 4 blocks or more, or after Max Hold, with a sound to confirm.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Max Hold (ms)</td><td>50–1500</td><td>400</td><td>Longest hold.</td></tr>
+<tr><td>Delay (ms)</td><td>0–5000</td><td>900</td><td>Pause between two holds.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="jumpreset"><summary><span class="mod-name">JumpReset</span><span class="tier tier-legit">Legit</span><span class="mod-short">Jumps as melee knockback hits you, so you take less of it.</span></summary><div class="mod-body"><p>Triggers when a nearby player swung in the last 400 ms without a projectile in hand, while you are on the ground and not in water.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Chance</td><td>0–1</td><td>1</td><td>Chance to jump on each hit.</td></tr>
+<tr><td>Sound</td><td>on / off</td><td>On</td><td>Plays a sound when it jumps.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="sprintreset"><summary><span class="mod-name">SprintReset</span><span class="tier tier-legit">Legit</span><span class="mod-short">Resets your sprint after a hit.</span></summary><div class="mod-body"><p>The reset is timed from your ping.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Mode</td><td>Normal, Unsprint</td><td>Normal</td><td>Normal cuts forward input for a tick. Unsprint lets go of the sprint key.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="velocity"><summary><span class="mod-name">Velocity</span><span class="tier tier-legit">Legit</span><span class="mod-short">Takes less knockback, the way a player would.</span></summary><div class="mod-body"><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Mode</td><td>Legit</td><td>Legit</td><td>Only mode for now.</td></tr>
+<tr><td>Reduce Ticks</td><td>1–3</td><td>2</td><td>Hits an enemy in reach during these ticks to get the 0.6× slowdown that comes with attacking.</td></tr>
+<tr><td>Jump Reset</td><td>on / off</td><td>On</td><td>Also jumps when the knockback arrives.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="knockbackdelay"><summary><span class="mod-name">KnockbackDelay</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Holds your packets for a moment after you take knockback.</span></summary><div class="mod-body"><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Delay (ms)</td><td>0–300</td><td>80–150</td><td>How long to hold (step 10).</td></tr>
+<tr><td>Mode</td><td>Normal, AntiCombo</td><td>AntiCombo</td><td>AntiCombo skips it during close back-and-forth trades.</td></tr>
+<tr><td>Cooldown (ms)</td><td>0–3000</td><td>800</td><td>Pause between two holds.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="lagrange"><summary><span class="mod-name">LagRange</span><span class="tier tier-legit">Legit</span><span class="mod-short">Holds your packets while you close in and lets them go with your first hit.</span></summary><div class="mod-body"><p>Picks the nearest valid player within 20 blocks (not in singleplayer). From more than 5 blocks away your packets are held, with a delay that builds up over 0.6 s, so the server and the target still see you further back. Your first attack releases everything; it also lets go when you back off or the target is gone.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Delay</td><td>0–1000 ms</td><td>300–500</td><td>Longest hold.</td></tr>
+<tr><td>Speed Up</td><td>on / off</td><td>On</td><td>While you walk at a target within 60° of your view, runs extra ticks from your timer balance so you arrive just inside reach.</td></tr>
+<tr><td>Slow Down</td><td>on / off</td><td>On</td><td>In reach while the target is still invulnerable, skips up to 3 ticks to save time for the next approach.</td></tr>
+<tr><td>Dodge</td><td>on / off</td><td>On</td><td>On the extra ticks, strafes away from where the target is aiming.</td></tr>
+<tr><td>Safety Margin (ms)<span class="adv">adv</span></td><td>0–200</td><td>50</td><td>Spare time kept for ping jitter. Raise it if Timer still flags.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="nohitdelay"><summary><span class="mod-name">NoHitDelay</span><span class="tier tier-legit">Legit</span><span class="mod-short">Removes the 1.8 click delay after a missed hit.</span></summary><div class="mod-body"><p class="mod-none">No settings. The module file itself is empty, so this description follows its name.</p></div></details>
+
+<details class="mod" id="autoweapon"><summary><span class="mod-name">AutoWeapon</span><span class="tier tier-legit">Legit</span><span class="mod-short">Switches to your best weapon when you aim at a player.</span></summary><div class="mod-body"><p>Picks the best sword or tool (damage plus Sharpness) while you look at a player who isn't a friend, then goes back to your slot.</p><p class="mod-none">No settings.</p></div></details>
+
+</div></section>
+
+<section class="mod-cat" id="movement"><h3>Movement <small>8 modules</small></h3><div class="mod-list">
+
+<details class="mod" id="scaffold"><summary><span class="mod-name">Scaffold</span><span class="tier tier-legit">Legit</span><span class="mod-short">Places blocks under you as you walk.</span></summary><div class="mod-body"><p>Places blocks below you with silent rotations and switches to a block slot by itself. Turns sprint off when enabled, highlights the block it aims at and shows a block counter (count, %, BPS/BPM).</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Rotation Speed</td><td>1–360</td><td>180–360</td><td>How fast it turns to place.</td></tr>
+<tr><td>Eagle</td><td>on / off</td><td>On</td><td>Sneaks at block edges.</td></tr>
+<tr><td>Safety</td><td>0–3</td><td>2</td><td>How early Eagle sneaks before the edge (step 0.1). Only with Eagle on.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="tellyscaffold"><summary><span class="mod-name">TellyScaffold</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Telly bridging: places blocks only while you are in the air.</span></summary><div class="mod-body"><p>Jumps with your normal rotations, turns around and places only while airborne, then turns back. Hold jump to go up one block per jump. Does nothing while <a href="#scaffold">Scaffold</a> is on.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Rotations</td><td>Heuristics, Snap</td><td>Heuristics</td><td>Heuristics flicks 135° from your camera and turns back once the landing block is down. Snap turns at Rotation Speed and snaps back when you land.</td></tr>
+<tr><td>Turn Ticks<span class="adv">adv</span></td><td>3–8</td><td>5</td><td>Heuristics: ticks spent on the turn.</td></tr>
+<tr><td>Max Turn Step<span class="adv">adv</span></td><td>30–180</td><td>70</td><td>Heuristics: largest turn in one tick.</td></tr>
+<tr><td>Bridge Speed</td><td>20–180</td><td>90</td><td>Heuristics: turn speed while bridging.</td></tr>
+<tr><td>Side Angle<span class="adv">adv</span></td><td>0–60</td><td>45</td><td>Heuristics: sideways angle used to place.</td></tr>
+<tr><td>Climb</td><td>on / off</td><td>On</td><td>Heuristics: holding jump builds up.</td></tr>
+<tr><td>Rotation Speed</td><td>1–360</td><td>180–360</td><td>Snap: turn speed.</td></tr>
+<tr><td>Start Tick<span class="adv">adv</span></td><td>1–8</td><td>1</td><td>Air tick on which it starts turning.</td></tr>
+<tr><td>Auto Jump</td><td>on / off</td><td>On</td><td>Jumps for you.</td></tr>
+<tr><td>Sprint</td><td>on / off</td><td>Off</td><td>Off gives shorter jumps and more time to place.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="bridgeassist"><summary><span class="mod-name">BridgeAssist</span><span class="tier tier-legit">Legit</span><span class="mod-short">Sneaks for you at the edge when you bridge backwards.</span></summary><div class="mod-body"><p>Kicks in on the ground with blocks in hand, while you hold back (S) and look down at least 65°. Does nothing while <a href="#scaffold">Scaffold</a> is on.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Safety</td><td>0–3</td><td>1</td><td>How many ticks ahead it sneaks (step 0.1).</td></tr>
+<tr><td>Smart Mode</td><td>on / off</td><td>Off</td><td>Turns your body slightly to keep you in line.</td></tr>
+<tr><td>Auto Correct Keys</td><td>on / off</td><td>On</td><td>Corrects your movement keys to keep you in line and shows arrows.</td></tr>
+<tr><td>Only On Shift<span class="adv">adv</span></td><td>on / off</td><td>Off</td><td>Only bridges while you hold sneak, then decides when to sneak.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="clutch"><summary><span class="mod-name">Clutch</span><span class="tier tier-blatant">Blatant</span><span class="mod-short">Places a block to save you when you fall or get knocked back.</span></summary><div class="mod-body"><p>Turns and places a block to catch you, switching to blocks by itself. Does nothing while <a href="#scaffold">Scaffold</a> is on.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Rotation Speed</td><td>10–360</td><td>200</td><td>How fast it turns to place.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="sprint"><summary><span class="mod-name">Sprint</span><span class="tier tier-qol">QoL</span><span class="mod-short">Keeps your sprint key held.</span></summary><div class="mod-body"><p class="mod-none">No settings.</p></div></details>
+
+<details class="mod" id="invmove"><summary><span class="mod-name">InvMove</span><span class="tier tier-legit">Legit</span><span class="mod-short">Walk around with your own inventory open.</span></summary><div class="mod-body"><p>Only your own inventory, not chests or other containers. The server isn't told the inventory is open until your first click.</p><div class="set-wrap"><table class="set"><thead><tr><th>Setting</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+<tr><td>Mode</td><td>Legit, Blatant</td><td>Legit</td><td>Legit: move freely until your first click, then stand still until you close it. Blatant: move the whole time; clicks are held and sent together when you close.</td></tr>
+</tbody></table></div></div></details>
+
+<details class="mod" id="nojumpdelay"><summary><span class="mod-name">NoJumpDelay</span><span class="tier tier-legit">Legit</span><span class="mod-short">Removes the vanilla delay between jumps when you hold jump.</span></summary><div class="mod-body"><p class="mod-none">No settings. The module file itself is empty, so this description follows its name.</p></div></details>
+
+<details class="mod" id="stasis"><summary><span class="mod-name">Stasis</span><span class="tier tier-legit">Legit</span><span class="mod-short">Freezes you in mid-air in short bursts.</span></summary><div class="mod-body"><p>Freezes you for 45 ticks, lets go for 1 tick, and repeats. Stops when you land and gives your momentum back when you turn it off. Position packets are cancelled unless you get hit.</p><p class="mod-warn">Flags on most servers. Opt-in only.</p><p class="mod-none">No settings.</p></div></details>
+
+</div></section>
+
+</section>
+
 <div class="prose flush">
 <p>Lists change between releases. <a href="https://github.com/ArsenicClient/Arsenic/tree/main/src/main/java/arsenic/module" target="_blank" rel="noopener">Browse the source ↗</a></p>
 <div class="related"><a href="addons.html"><b>Addons</b><span>70+ more modules</span></a><a href="features.html"><b>Features</b><span>What&rsquo;s inside</span></a><a href="install.html"><b>Install</b><span>Three steps</span></a></div>
